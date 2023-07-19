@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [    
      'localhost',
     'django-server-production-ec07.up.railway.app',
-    # other hosts...]
+]
 
 
 # Application definition
