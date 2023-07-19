@@ -1,0 +1,268 @@
+
+<html lang="en">
+<html>
+<head>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Welcome to the classification results</title>
+	<meta charset="UTF-8">
+	<!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+   <!-- jQuery library -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+   <!-- Latest compiled JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+
+   <!--<title>Welcome to DisTek</title>-->
+
+   <style>
+	   * {margin: 0; padding: 0; box-sizing: border-box;}
+	   body {font-family: 'Roboto', sans-serif; font-size: 16px; line-height: 1;}
+	   .page{background-image: url("{{ STATIC_URL }}/media/images/123.jpg"); background-position: center; background-size: cover; background-repeat: no-repeat;}
+	   .container {max-width: 1100px; padding: 0 20px; margin:0 auto;}
+	   .panel {margin: 100px auto 40px; max-width: 500px; text-align: center;}
+	   .button_outer {background: #83ccd3; border-radius:30px; text-align: center; height: 50px; width: 200px; display: inline-block; transition: .2s; position: relative; overflow: hidden;}
+	   .btn_upload {padding: 17px 30px 12px; color: #fff; text-align: center; position: relative; display: inline-block; overflow: hidden; z-index: 3; white-space: nowrap;}
+	   .btn_upload input {position: absolute; width: 100%; left: 0; top: 0; width: 100%; height: 105%; cursor: pointer; opacity: 0;}
+	   .file_uploading {width: 100%; height: 10px; margin-top: 20px; background: #ccc;}
+	   .file_uploading .btn_upload {display: none;}
+	   .processing_bar { position: absolute; left: 0; top: 0; width: 0; height: 100%; border-radius: 30px; background:#83ccd3; transition: 3s;}
+	   .file_uploading .processing_bar {width:100%;}
+	   .success_box {display: none;height: 50px; width: 200px; position: relative;background:#83ccd3;border-color: #83ccd3;}
+	   .success_box:before {content: 'Predict';display: inline-block;height: 50px; width: 200px; border-radius:30px;position: relative; overflow: hidden; z-index: 3; white-space: nowrap;color: #fff;text-align: center;padding: 17px 30px 12px; }
+	   .file_uploaded .success_box {display: block; height: 50px; width: 200px;border-radius:30px;border-color: #83ccd3;}
+	   .file_uploaded {margin-top: 0; width: 200px; background:#83ccd3; height: 50px;border-radius:30px}
+	   .uploaded_file_view {margin-bottom: 50px; height: auto;max-width: 300px; margin: 40px auto; text-align: center; position: relative; transition: .2s; opacity: 0; border: 2px solid #ddd; padding: 15px;}
+	   .file_remove{width: 30px; height: 30px; border-radius: 50%; display: block; position: absolute; background:#83ccd3 ; line-height: 30px; color: #fff; font-size: 12px; cursor: pointer; right: -15px; top: -15px;}
+	   .file_remove:hover {background: #222; transition: .2s;}
+	   .uploaded_file_view img {max-width: 100%;height:auto;}
+	   .uploaded_file_view.show {opacity: 1;}
+	 
+	   
+	   .error_msg {text-align: center; color: #f00}
+	   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+
+	   .footer {
+	   position: fixed;
+	   left: 0;
+	   bottom: 0;
+	   width: 100%;
+	   background: sandybrown;
+	   min-height: 100px;
+	   padding: 20px 50px;
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   flex-direction: column;
+	   margin-top: auto;
+	 }
+
+
+	   .social-icon,
+	   .menu {
+		 position: relative;
+		 display: flex;
+		 justify-content: center;
+		 align-items: center;
+		 margin: 10px 0;
+		 flex-wrap: wrap;
+	   }
+
+	   .social-icon__item,
+	   .menu__item {
+		 list-style: none;
+	   }
+
+	   .social-icon__link {
+		 font-size: 2rem;
+		 color: #fff;
+		 margin: 0 10px;
+		 display: inline-block;
+		 transition: 0.5s;
+	   }
+	   .social-icon__link:hover {
+		 transform: translateY(-10px);
+	   }
+
+	   .menu__link {
+		 font-size: 1.2rem;
+		 color: #fff;
+		 margin: 0 10px;
+		 display: inline-block;
+		 transition: 0.5s;
+		 text-decoration: none;
+		 opacity: 0.75;
+		 font-weight: 300;
+	   }
+
+	   .menu__link:hover {
+		 opacity: 1;
+	   }
+
+	   .footer p {
+		 color: #fff;
+		 margin: 15px 0 10px 0;
+		 font-size: 1rem;
+		 font-weight: 300;
+	   }
+
+	   .wave {
+		 position: absolute;
+		 top: -100px;
+		 left: 0;
+		 width: 100%;
+		 height: 100px;
+		 background: url("https://i.ibb.co/wQZVxxk/wave.png");
+		 backdrop-filter: saturate(150%);
+		 background-size: 1000px 100px;
+	   }
+
+	   .wave#wave1 {
+		 z-index: 1000;
+		 opacity: 1;
+		 bottom: 0;
+		 animation: animateWaves 4s linear infinite;
+	   }
+
+	   .wave#wave2 {
+		 z-index: 999;
+		 opacity: 0.5;
+		 bottom: 10px;
+		 animation: animate 4s linear infinite !important;
+	   }
+
+	   .wave#wave3 {
+		 z-index: 1000;
+		 opacity: 0.2;
+		 bottom: 15px;
+		 animation: animateWaves 3s linear infinite;
+	   }
+
+	   .wave#wave4 {
+		 z-index: 999;
+		 opacity: 0.7;
+		 bottom: 20px;
+		 animation: animate 3s linear infinite;
+	   }
+
+	   @keyframes animateWaves {
+		 0% {
+		   background-position-x: 1000px;
+		 }
+		 100% {
+		   background-positon-x: 0px;
+		 }
+	   }
+
+	   @keyframes animate {
+		 0% {
+		   background-position-x: -1000px;
+		 }
+		 100% {
+		   background-positon-x: 0px;
+		 }
+	   }
+		.content-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.image-container {
+			margin-bottom: 20px;
+		}
+
+		.result-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+   </style>
+
+   <script>
+	   window.console = window.console || function(t) {};
+   </script>
+	
+</head>
+
+
+<body class= "page" translate="no">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<div class="container">
+    <h1 class="text-white">Welcome to DisTek, <br>
+        Your AI image analyser to detect disaster!
+    </h1>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <main class="main_full">
+        <div class="content-container">
+            <h2>Image Classification Results:</h2>
+            <div class="image-container">
+                <img src="{{ image_url }}" alt="Uploaded Image" height="224px" width="224px">
+            </div>
+			<div class="result-container">
+				{% if result == "The image cannot be classified as any disaster type and of the non damage classes present in the dataset." %}
+					<p><b><h3 style="color: #f00;">{{ result }}</h3> </b></p>
+				{% else %}
+					<p><b>Classification Result:</b> {{ result }}</p>
+					{% for label, probability in probabilities|dictsort:"0" %}
+    					{% if label == predicted_label %}
+        					<p><b>Probability:</b> {{ probability|floatformat:"2" }}</p>
+   						 {% endif %}
+					{% endfor %}
+					<p><b>Prediction Time:</b>
+						{% if prediction_time < 1 %}
+							Less than 1 sec
+						{% else %}
+							{{ prediction_time|floatformat:"2" }} <b>Seconds</b>
+						{% endif %}
+					</p>
+				{% endif %}
+				
+				
+
+			</div>
+			
+		<button class="btn btn-primary btn-back" type ="submit">Back</button>
+	
+	</div>
+	</main>
+</form>
+
+
+<footer class="footer">
+	<!--
+  <div class="waves">
+	<div class="wave" id="wave1"></div>
+	<div class="wave" id="wave2"></div>
+	<div class="wave" id="wave3"></div>
+	<div class="wave" id="wave4"></div>
+  </div>
+  -->
+  <ul class="social-icon">
+	<li class="social-icon__item"><a class="social-icon__link" href="https://www.facebook.com/anisha.coopen">
+		<ion-icon name="logo-facebook"></ion-icon>
+	  </a></li>
+	<li class="social-icon__item"><a class="social-icon__link" href="#">
+		<ion-icon name="logo-twitter"></ion-icon>
+	  </a></li>
+	<li class="social-icon__item"><a class="social-icon__link" href="https://www.linkedin.com/in/anisha-coopen-13b674203/">
+		<ion-icon name="logo-linkedin"></ion-icon>
+	  </a></li>
+	<li class="social-icon__item"><a class="social-icon__link" href="https://www.instagram.com/anisha_coopen/">
+		<ion-icon name="logo-instagram"></ion-icon>
+	  </a></li>
+  </ul>
+</footer>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+
+
+</html>
