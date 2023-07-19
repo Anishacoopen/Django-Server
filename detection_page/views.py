@@ -3,7 +3,7 @@ from .forms import ImageForm
 from .model_loader import load_model
 #from tensorflow.keras.applications.mobilenet import preprocess_input
 from tensorflow.keras.applications.inception_v3 import preprocess_input
-
+from django.template import RequestContext
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 
@@ -109,7 +109,8 @@ def classify_image(request):
                 'predicted_label': predicted_label
             }
 
-            return render(request, 'detection_page/index.html', context)
+            #return render(request, 'detection_page/index.html', context)
+            render(request, 'detection_page/index.html', RequestContext(request, context))
         else:
             return redirect('classify_image')  # Redirect to the home_detection page if no image is uploaded
     else:
