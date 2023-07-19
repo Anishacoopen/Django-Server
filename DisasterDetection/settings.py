@@ -36,10 +36,8 @@ CSRF_TRUSTED_ORIGINS = [
 # settings.py
 
 CORS_ORIGIN_WHITELIST = [
-    'https://django-server-production-ec07.up.railway.app',
+    'django-server-production-ec07.up.railway.app',
 ]
-
-
 
 # Application definition
 
