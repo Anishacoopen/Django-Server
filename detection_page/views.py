@@ -135,5 +135,5 @@ def save_results_to_excel(image_name, predicted_label, probabilities, prediction
     df = pd.DataFrame(data)
     
     # Specify the desired Excel file path
-    excel_file_path = 'C:/Users/Anisha/DjangoUI/DisasterDetection/ExcelSheet/classification_results.xlsx'
+    excel_file_path = '/app/ExcelSheet/classification_results.xlsx'
     df.to_excel(excel_file_path, index=False, header=True)
