@@ -44,6 +44,7 @@ tensorboard-plugin-wit==1.8.1
 tensorflow==2.12.0
 tensorflow-estimator==2.12.0
 tensorflow-io-gcs-filesystem==0.31.0
+tensorrt==8.6.1
 termcolor==2.2.0
 typing_extensions==4.5.0
 tzdata==2023.3
