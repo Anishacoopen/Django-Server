@@ -29,6 +29,9 @@ ALLOWED_HOSTS = [
      'localhost',
     'django-server-production-ec07.up.railway.app',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'django-server-production-ec07.up.railway.app',   
+]
 
 
 # Application definition
